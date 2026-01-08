@@ -1,4 +1,4 @@
-# Immersive 3D Background
+# immersive-op
 
 Immersive 3D background with head-coupled perspective for Webflow integration.
 
@@ -9,16 +9,27 @@ Immersive 3D background with head-coupled perspective for Webflow integration.
 
 ## GitHub Pages Setup
 
-1. Push this repo to GitHub
-2. Enable GitHub Pages in repository settings
+1. Enable GitHub Pages in repository settings (Settings → Pages)
+2. Select source: Deploy from a branch → main → / (root)
 3. Use the GitHub Pages URL in Webflow
 
-## Raw GitHub URLs
+## Webflow Integration
 
-You can also use raw GitHub file URLs directly:
+Add this code to your Webflow page (before `</body>`):
 
+```html
+<!-- Immersive 3D Background Configuration -->
+<script>
+  window.IMMERSIVE_CONFIG = {
+    logoPath: 'https://offpisteagency.github.io/immersive-op/public/OFF-PISTE.glb'
+  };
+</script>
+
+<!-- Immersive 3D Background Script -->
+<script src="https://offpisteagency.github.io/immersive-op/dist/immersive-bg.min.js"></script>
 ```
-https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/dist/immersive-bg.min.js
-https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/public/OFF-PISTE.glb
-```
 
+Don't forget to add the container div in Webflow Designer:
+```html
+<div id="hero-canvas"></div>
+```
