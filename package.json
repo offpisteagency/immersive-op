@@ -1,0 +1,19 @@
+{
+  "name": "immersive-3d-background",
+  "version": "1.0.0",
+  "description": "Immersive 3D background with head-coupled perspective for Webflow",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@mediapipe/face_detection": "^0.4.1646425229",
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
+
