@@ -450,22 +450,36 @@ class ImmersiveBackground {
 
 // Auto-initialize when DOM is ready
 function initImmersiveBackground() {
-  const bg = new ImmersiveBackground();
-  bg.init().then((success) => {
-    if (success) {
-      console.log('Immersive background initialized');
-    }
-  });
-  
-  // Expose for debugging
-  window.__IMMERSIVE_BG__ = bg;
+  try {
+    console.log('Initializing immersive background...');
+    const bg = new ImmersiveBackground();
+    bg.init().then((success) => {
+      if (success) {
+        console.log('Immersive background initialized successfully');
+      } else {
+        console.warn('Immersive background initialization returned false');
+      }
+    }).catch((error) => {
+      console.error('Immersive background initialization failed:', error);
+    });
+    
+    // Expose for debugging
+    window.__IMMERSIVE_BG__ = bg;
+  } catch (error) {
+    console.error('Immersive background error:', error);
+  }
 }
 
-// Initialize on DOM ready
+// Initialize on DOM ready with a small delay to ensure Webflow scripts are loaded
+function safeInit() {
+  // Small delay to ensure all Webflow elements are ready
+  setTimeout(initImmersiveBackground, 100);
+}
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initImmersiveBackground);
+  document.addEventListener('DOMContentLoaded', safeInit);
 } else {
-  initImmersiveBackground();
+  safeInit();
 }
 
 export { ImmersiveBackground };
