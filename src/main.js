@@ -97,6 +97,12 @@ class ImmersiveBackground {
       // Load model
       this.modelLoader = new ModelLoader(this.config);
       const model = await this.modelLoader.load();
+      
+      // Create environment map and apply chrome material for that liquid metal look
+      const envMap = this.modelLoader.createEnvMap(this.renderer);
+      this.sceneManager.setEnvironment(envMap);
+      this.modelLoader.applyChromeMaterial(model, envMap);
+      
       this.sceneManager.add(model);
       
       // Setup terminal overlay
@@ -151,7 +157,7 @@ class ImmersiveBackground {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1;
+    this.renderer.toneMappingExposure = 1.3;  // Slightly brighter for chrome visibility
   }
   
   /**

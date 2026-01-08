@@ -45,6 +45,14 @@ export class SceneManager {
     this.scene.fog = new THREE.FogExp2(this.config.backgroundColor, 0.015);
   }
   
+  /**
+   * Set scene environment map for reflections
+   * @param {THREE.Texture} envMap
+   */
+  setEnvironment(envMap) {
+    this.scene.environment = envMap;
+  }
+  
   setupLighting() {
     const { config } = this;
     

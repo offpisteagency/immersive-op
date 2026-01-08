@@ -57,15 +57,15 @@ const DEFAULT_CONFIG = {
     ui: 0.6       // Terminal overlay elements
   },
 
-  // Lighting
-  ambientLightColor: 0x606080,
-  ambientLightIntensity: 0.6,
+  // Lighting (optimized for chrome/metallic look)
+  ambientLightColor: 0x303040,
+  ambientLightIntensity: 0.25,         // Lower ambient for more contrast
   mainLightColor: 0xffffff,
-  mainLightIntensity: 1.5,
-  mainLightPosition: { x: 5, y: 5, z: 5 },
-  rimLightColor: 0x6080ff,
-  rimLightIntensity: 0.8,
-  rimLightPosition: { x: -5, y: 0, z: -5 },
+  mainLightIntensity: 2.5,             // Strong main light for bright highlights
+  mainLightPosition: { x: 5, y: 8, z: 5 },
+  rimLightColor: 0x8090ff,
+  rimLightIntensity: 1.5,              // Strong rim for edge glow
+  rimLightPosition: { x: -5, y: 2, z: -5 },
 
   // Performance
   maxPixelRatio: 2,
