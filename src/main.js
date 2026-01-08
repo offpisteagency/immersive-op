@@ -11,6 +11,7 @@ import { ModelLoader } from './core/loader.js';
 import { FaceTracker } from './tracking/face-tracker.js';
 import { GyroscopeTracker } from './tracking/gyroscope.js';
 import { FallbackAnimator } from './tracking/fallback.js';
+import { TerminalOverlay } from './background/terminal-overlay.js';
 import { 
   isMobile, 
   hasGyroscope, 
@@ -36,6 +37,12 @@ class ImmersiveBackground {
     this.gyroscopeTracker = null;
     this.fallbackAnimator = null;
     this.activeTracker = null;
+    
+    // Terminal overlay
+    this.terminalOverlay = null;
+    
+    // Current tracking offset for passing to background layers
+    this.currentTrackingOffset = { x: 0, y: 0, z: 0 };
     
     // Animation state
     this.isRunning = false;
@@ -92,6 +99,11 @@ class ImmersiveBackground {
       const model = await this.modelLoader.load();
       this.sceneManager.add(model);
       
+      // Setup terminal overlay
+      if (this.config.terminalOverlay) {
+        this.terminalOverlay = new TerminalOverlay(this.config);
+      }
+      
       // Setup tracking based on device
       await this.setupTracking();
       
@@ -146,9 +158,20 @@ class ImmersiveBackground {
    * Setup tracking based on device capabilities
    */
   async setupTracking() {
-    // Callback for all trackers
+    // Callback for all trackers - updates camera, parallax layers, and terminal overlay
     const onTrackingUpdate = (x, y, z) => {
+      this.currentTrackingOffset = { x, y, z };
       this.cameraController.setTargetOffset(x, y, z);
+      
+      // Update parallax layers with tracking offset
+      if (this.sceneManager) {
+        this.sceneManager.setParallaxOffset(x, y);
+      }
+      
+      // Update terminal overlay with tracking offset
+      if (this.terminalOverlay) {
+        this.terminalOverlay.setOffset(x, y);
+      }
     };
     
     // Always create fallback animator
@@ -401,8 +424,13 @@ class ImmersiveBackground {
     // Update camera
     this.cameraController.update(deltaTime);
     
-    // Update scene (particles, etc.)
+    // Update scene (particles, parallax layers, etc.)
     this.sceneManager.update(deltaTime);
+    
+    // Update terminal overlay
+    if (this.terminalOverlay) {
+      this.terminalOverlay.update();
+    }
     
     // Update model
     if (this.modelLoader) {
@@ -428,6 +456,10 @@ class ImmersiveBackground {
     
     if (this.gyroscopeTracker) {
       this.gyroscopeTracker.stop();
+    }
+    
+    if (this.terminalOverlay) {
+      this.terminalOverlay.dispose();
     }
     
     if (this.sceneManager) {

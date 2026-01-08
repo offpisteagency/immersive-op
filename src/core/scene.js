@@ -1,9 +1,10 @@
 /**
  * Three.js Scene Setup
- * Creates the scene with lighting, grid, and particle system
+ * Creates the scene with lighting, grid, particle system, and parallax layers
  */
 
 import * as THREE from 'three';
+import { ParallaxLayers } from '../background/parallax-layers.js';
 
 export class SceneManager {
   constructor(config) {
@@ -12,9 +13,16 @@ export class SceneManager {
     this.particles = null;
     this.particlePositions = null;
     this.particleVelocities = null;
+    this.parallaxLayers = null;
+    this.elapsedTime = 0;
     
     this.setupScene();
     this.setupLighting();
+    
+    // Setup parallax background layers
+    if (config.parallaxLayers) {
+      this.setupParallaxLayers();
+    }
     
     if (config.showGrid) {
       this.setupGrid();
@@ -23,6 +31,11 @@ export class SceneManager {
     if (config.showParticles) {
       this.setupParticles();
     }
+  }
+  
+  setupParallaxLayers() {
+    this.parallaxLayers = new ParallaxLayers(this.config);
+    this.scene.add(this.parallaxLayers.getGroup());
   }
   
   setupScene() {
@@ -228,10 +241,29 @@ export class SceneManager {
   }
   
   /**
-   * Update particles for animation
+   * Set parallax offset from tracking
+   * @param {number} x - X offset
+   * @param {number} y - Y offset
+   */
+  setParallaxOffset(x, y) {
+    if (this.parallaxLayers) {
+      this.parallaxLayers.setOffset(x, y);
+    }
+  }
+  
+  /**
+   * Update particles and parallax layers
    * @param {number} deltaTime - Time since last frame
    */
   update(deltaTime) {
+    this.elapsedTime += deltaTime;
+    
+    // Update parallax layers
+    if (this.parallaxLayers) {
+      this.parallaxLayers.update(deltaTime, this.elapsedTime);
+    }
+    
+    // Update particles
     if (!this.particles || !this.particlePositions || !this.particleVelocities) {
       return;
     }
@@ -283,6 +315,10 @@ export class SceneManager {
     if (this.particles) {
       this.particles.geometry.dispose();
       this.particles.material.dispose();
+    }
+    
+    if (this.parallaxLayers) {
+      this.parallaxLayers.dispose();
     }
     
     // Traverse and dispose all objects

@@ -28,19 +28,34 @@ const DEFAULT_CONFIG = {
 
   // Background & Scene
   backgroundColor: 0x0a0a0f,
-  showGrid: true,
+  showGrid: false, // Disabled - using parallax grid instead
   gridSize: 50,
   gridDivisions: 40,
   gridColor: 0x2a2a4e,
   gridCenterColor: 0x4a4a7e,
 
-  // Particles
-  showParticles: true,
+  // Particles (disabled for cleaner tech grid aesthetic)
+  showParticles: false,
   particleCount: 200,
   particleSize: 0.04,
   particleColor: 0x6a6a9e,
   particleSpread: 25,
   particleDrift: 0.0003,
+
+  // Terminal Background
+  terminalOverlay: true,
+  showCornerBrackets: true,
+  showSystemText: true,
+  scanLineOpacity: 0.015,
+
+  // Parallax Layers
+  parallaxLayers: true,
+  parallaxMultipliers: {
+    deep: 0.1,    // Deep grid layer
+    mid: 0.3,     // Tech dots pattern
+    near: 0.5,    // Scan lines
+    ui: 0.6       // Terminal overlay elements
+  },
 
   // Lighting
   ambientLightColor: 0x606080,
