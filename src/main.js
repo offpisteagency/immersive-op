@@ -59,11 +59,22 @@ class ImmersiveBackground {
       return false;
     }
     
-    // Find container
+    // Find or create container
     this.container = document.getElementById(this.config.containerId);
     if (!this.container) {
-      console.warn(`Container #${this.config.containerId} not found`);
-      return false;
+      console.log(`Container #${this.config.containerId} not found, creating it`);
+      this.container = document.createElement('div');
+      this.container.id = this.config.containerId;
+      this.container.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+      `;
+      document.body.insertBefore(this.container, document.body.firstChild);
     }
     
     try {
