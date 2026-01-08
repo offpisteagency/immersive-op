@@ -6,13 +6,13 @@
 const DEFAULT_CONFIG = {
   // Logo / Model
   logoPath: '/OFF-PISTE.glb', // Path to GLTF file, null uses placeholder cube
-  logoScale: 1,
+  logoScale: 2,
   logoRotation: { x: 0, y: 0, z: 0 },
 
   // Camera
   cameraFOV: 50,
   cameraDistance: 6,
-  maxCameraOffset: { x: 2.5, y: 1.4, z: 1.5 },
+  maxCameraOffset: { x: 8, y: 1.4, z: 3 },
   cameraNear: 0.1,
   cameraFar: 1000,
 
@@ -57,7 +57,7 @@ const DEFAULT_CONFIG = {
   antialias: true,
 
   // Gyroscope (mobile)
-  gyroMaxTilt: 30, // degrees
+  gyroMaxTilt: 40, // degrees
   gyroSensitivity: 1,
 
   // Container
