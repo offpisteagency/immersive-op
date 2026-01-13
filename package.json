@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "dev:spotlight": "vite --config vite.config.js",
+    "build": "npm run build:immersive && npm run build:spotlight",
+    "build:immersive": "BUILD_TARGET=immersive vite build",
+    "build:spotlight": "BUILD_TARGET=spotlight vite build",
     "preview": "vite preview"
   },
   "dependencies": {

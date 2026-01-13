@@ -76,7 +76,26 @@ const DEFAULT_CONFIG = {
   gyroSensitivity: 1,
 
   // Container
-  containerId: 'hero-canvas'
+  containerId: 'hero-canvas',
+
+  // ============================================
+  // Spotlight Background Settings (Fluid Halftone)
+  // ============================================
+  
+  // Fluid settings
+  spotlightRadius: 0.3,               // Not used in fluid mode
+  spotlightSoftness: 0.2,             // Not used in fluid mode
+  
+  // Dot pattern
+  dotDensity: 70,                     // Number of dots per row (higher = finer pattern)
+  dotSize: 0.9,                       // Dot size multiplier
+  crossRatio: 0.0,                    // Not used
+  
+  // Colors (black background, grey dots)
+  colorDark: '#000000',               // Background (pure black)
+  colorLight: '#666666',              // Brightest dot color (dark grey)
+  dotColorDark: '#000000',            // Not used
+  dotColorLight: '#666666'            // Not used
 };
 
 /**
