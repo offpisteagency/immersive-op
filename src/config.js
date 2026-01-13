@@ -45,7 +45,7 @@ const DEFAULT_CONFIG = {
   // Terminal Background
   terminalOverlay: true,
   showCornerBrackets: true,
-  showSystemText: true,
+  showSystemText: false,
   scanLineOpacity: 0.015,
 
   // Parallax Layers
